@@ -1,9 +1,61 @@
-{
-  "posts": [
-    { "id": 1, "title": "json-server", "author": "typicode" }
-  ],
-  "comments": [
-    { "id": 1, "body": "some comment", "postId": 1 }
-  ],
-  "profile": { "name": "typicode" }
+#include <stdio.h>
+
+// Estrutura para representar um carro
+struct Carro {
+    char modelo[50];
+    float custo_fabricacao;
+    float preco_venda;
+};
+
+// Estrutura para representar a Agência
+struct Agencia {
+    char nome[50];
+    int carros_vendidos;
+    float lucro_total;
+};
+
+// Função para calcular o lucro por carro
+float calcularLucroPorCarro(struct Carro carro) {
+    return carro.preco_venda - carro.custo_fabricacao;
+}
+
+// Função para calcular a margem de lucro anual
+float calcularMargemLucroAnual(struct Agencia agencia, float custo_total) {
+    return (agencia.lucro_total / custo_total) * 100;
+}
+
+int main() {
+    // Dados simulados
+    struct Carro carro1 = {"Sedan", 20000.0, 35000.0};
+    struct Carro carro2 = {"SUV", 30000.0, 50000.0};
+    struct Carro carro3 = {"Compacto", 15000.0, 25000.0};
+
+    struct Agencia agencia = {"Agencia Principal", 0, 0.0};
+
+    // Número de carros vendidos de cada modelo
+    int vendidos_sedan = 120;
+    int vendidos_suv = 90;
+    int vendidos_compacto = 180;
+
+    // Cálculo do lucro total
+    agencia.carros_vendidos = vendidos_sedan + vendidos_suv + vendidos_compacto;
+    agencia.lucro_total = (vendidos_sedan * calcularLucroPorCarro(carro1)) +
+                          (vendidos_suv * calcularLucroPorCarro(carro2)) +
+                          (vendidos_compacto * calcularLucroPorCarro(carro3));
+
+    // Custo total de fabricação
+    float custo_total_fabricacao = (vendidos_sedan * carro1.custo_fabricacao) +
+                                   (vendidos_suv * carro2.custo_fabricacao) +
+                                   (vendidos_compacto * carro3.custo_fabricacao);
+
+    // Margem de lucro anual
+    float margem_lucro_anual = calcularMargemLucroAnual(agencia, custo_total_fabricacao);
+
+    // Exibição dos resultados
+    printf("Agência: %s\n", agencia.nome);
+    printf("Carros vendidos no ano: %d\n", agencia.carros_vendidos);
+    printf("Lucro total no ano: R$ %.2f\n", agencia.lucro_total);
+    printf("Margem de lucro anual: %.2f%%\n", margem_lucro_anual);
+
+    return 0;
 }
